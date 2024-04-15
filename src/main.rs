@@ -25,7 +25,7 @@ fn handle_client(mut stream: TcpStream) {
     // this line read data from the stream and stores it into buffer
     stream.read(&mut buffer).expect("failed to read the data");
     // this line convert the data in the buffer into a UTF-8 encoded string
-    let request = String::from_utf8_lossy(&buffer[..]);
+    let request = String::from_utf8_lossy(&buffer);
 
     println!("Recieved request : {}", request);
 
@@ -33,3 +33,31 @@ fn handle_client(mut stream: TcpStream) {
 
     stream.write(response).expect("failed to write response");
 }
+
+// Tcp client in rust 
+
+// use std::io::{self, BufRead, Write};
+// use std::net::TcpStream;
+
+// fn main() {
+//     // Connect to the server
+//     match TcpStream::connect("localhost:8000") {
+//         Ok(mut stream) => {
+//             println!("Successfully connected to the server.");
+
+//             // Prompt user for input
+//             print!("Enter data to send: ");
+//             io::stdout().flush().unwrap();
+
+//             let mut input = String::new();
+//             io::stdin().lock().read_line(&mut input).unwrap();
+
+//             // Send data to the server
+//             match stream.write_all(input.as_bytes()) {
+//                 Ok(_) => println!("Data sent successfully."),
+//                 Err(e) => eprintln!("Error sending data: {}", e),
+//             }
+//         }
+//         Err(e) => eprintln!("Error connecting: {}", e),
+//     }
+// }
